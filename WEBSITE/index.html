@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Website with CRUD OPERATION</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+<div> 
+  <div class="w3-bar w3-teal" style="padding:10px">
+    <h1 class="w3-serif">Understand CRUD OPERATION with JS and PostgreSQL&nbsp;&nbsp;&nbsp;<img  src="images/mickey.png"  alt="Logo" style="width:90px"></h1>
+  </div>
+
+<!-- User ko form ho.--> 
+  <div class="w3-quarter w3-container">
+    <h1 class="w3-serif">User Form</h1>
+    <br><br><br>
+
+    <div class="w3-container w3-card w3-round-large" style="padding:20px; width:310px">
+      <form id="userForm" class="w3-container">
+
+        <label for="name"><i class="fa fa-user">&nbsp;</i>Name</label>
+        <input type="text" id="name" class="w3-input w3-border" placeholder="Harka Bahadur"  pattern="^[A-Za-z\s]+$"  required><br>
+
+        <label for="email"><i class="fa fa-envelope"></i>&nbsp;Email</label>
+        <input type="email" id="email" class="w3-input w3-border" placeholder="harkaa543@gmail.com" required><br>
+
+        <label for="phone"><i class="fa fa-phone"></i>&nbsp;Phone Number </label>
+        <div class="w3-input w3-border">
+          <span class="country-code">+977</span>
+          <input type="text" id="phone" placeholder="9807892245" pattern="^\d{10}$" required>
+        </div><br>
+
+        <button type="submit" class="w3-button w3-round w3-blue">Submit</button>
+      </form>
+    </div>
+
+  </div>
+
+  <div class="w3-quarter w3-container w3-center">
+    <div>
+      <br><br><br><br><br><br><br><br>
+      <img src="images/images.avif" alt="Static Image" style="width:180px">
+    </div>
+  </div>
+
+<!-- User List including search Engine -->
+  <div class="w3-half w3-container">
+    <h1 class="w3-serif">User List</h1>
+
+    <div class="w3-container">
+      <input type="text" id="searchInput" class="w3-input w3-border w3-round-large" placeholder="Search by name or email">
+    </div>
+
+    <br>
+    <table id="userTable" class="w3-table w3-bordered w3-striped">
+      <thead>
+        <tr class="w3-blue">
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone Number</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="userList"></tbody>
+    </table>
+  </div>
+
+  <!-- Update User Modal -->
+  <div id="editModal" class="w3-modal">
+    <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width: 400px;">
+      <div class="w3-container w3-round-large">
+        <span onclick="closeEditModal()" class="w3-button w3-large w3-hover-text-red w3-display-topright" title="Close Modal">&times;</span>
+        <h3>Edit User</h3>
+
+        <form id="editForm" class="w3-container">
+          <label for="editName">New Name:</label>
+          <input type="text" id="editName" class="w3-input w3-border" placeholder="New Name" required><br>
+
+          <label for="editEmail">New Email:</label>
+          <input type="email" id="editEmail" class="w3-input w3-border" placeholder="New Email" required><br>
+
+          <button type="submit" class="w3-button w3-round w3-green">Save</button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete User Modal -->
+  <div id="deleteModal" class="w3-modal">
+    <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width: 400px;">
+      <div class="w3-container w3-round-large">
+        <span onclick="closeDeleteModal()" class="w3-button w3-large w3-hover-text-red w3-display-topright" title="Close Modal">&times;</span>
+        <h3>Delete User</h3>
+        <p>Are you sure you want to delete this user?</p>
+        
+        <div class="w3-center">
+          <button onclick="confirmDeleteUser()" class="w3-button w3-round w3-red">Delete</button>
+          <button onclick="closeDeleteModal()" class="w3-button w3-round">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>  
+<br><br>
+
+  <div class="w3-bar w3-black w3-bottom" style="position:fixed; bottom: 0; width: 100%;">
+    <p class="w3-text-white w3-center w3-large" style="margin: 0;">&copy;All rights reserved.</p>
+  </div>
+
+
+  <script src="script.js"></script> 
+ <!-- Script.js will handle every event being performed in frontent. -->
+
+</body>
+</html>
