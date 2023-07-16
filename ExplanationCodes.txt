@@ -1,0 +1,156 @@
+id are ----------> 
+
+userForm -- (4 times in script.js) -- // For form validation 
+	
+searchInput --(6 times in script.js) --// For Searching
+
+userTable --//nothing
+
+userList -- To Show The Data in frontent
+      // Does email Exist
+	    // Does phone number exist
+	    // TO Fetch data
+	    // Filter to search
+
+
+editModal
+	editForm
+
+deleteModal
+	
+--------------------------------------------Form Validation and Posting Data to Server------------------------------------------------------------------------------------------
+
+script.js
+_________
+
+a) Html Document
+
+b) communication with server.
+
+
+  fetch('/users', //endpoint
+  {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(formData)
+  })
+    .then(response => {
+      if (response.ok) {
+        userForm.reset();
+        fetchUsers(); // Fetch updated user data after successful submission
+      } else {
+        alert('Failed to add user.');
+      }
+    })
+    .catch(error => { //Starts the error handling block, which will be executed if there is an error in the request or response.
+      console.error('Error:', error);
+    });
+});
+
+
+-----------------------------------------Explanation----------------------------------------------------
+1.fetch('/users',       - initiates an HTTP request to the '/users' endpoint
+
+2.method: 'POST',	- sets the HTTP method for the request as POST
+
+3.headers: { 'Content-Type': 'application/json' },	- Content-Type' header indicates the type of data being sent.
+							- Here Post is Done in Json Format
+							- Sets the request headers, specifying that the content being sent in the 
+							  request body is in JSON format
+
+4.body: JSON.stringify(formData)  - Converts the formData object into a JSON string using JSON.stringify(). 
+				    This JSON string represents that the data will be sent as the request body. 
+				    Here formData contains user input data.
+
+5.then(response => {	- This starts the callback function that will be executed when the request receives a response from server.
+
+6.if (response.ok) {	- Checks if the response status is in the successful range (200-299). 
+			  If it is, it means the request was successful.
+
+7.userForm.reset();	- Resets the userForm, likely clearing any input fields or resetting form state after a successful submission.
+
+8.fetchUsers();		- Calls a function fetchUsers() to fetch updated user data after successful submission. 
+
+9.else {
+    alert('Failed to add user.');	- Displays an alert message indicating that the addition of the user failed.
+ }
+
+10..catch(error => {
+	Starts the error handling block, which will be executed if there is an error in the request or response.
+
+11.console.error('Error:', error);
+        Logs
+
+-------------------------------------------------------------------------------------------------------------------
+c)server.js	
+
+This code snippet represents a route handler for an HTTP POST request to the '/users' endpoint in a Node.js application. 
+It receives data from the request body, inserts it into a database table, and sends an appropriate response. 
+
+// Add a new user  -- 
+app.post('/users', (req, res) => {
+  const { name, email, phone } = req.body;
+  const query = 'INSERT INTO users (name, email, phone) VALUES ($1, $2, $3)';
+  const values = [name, email, phone];
+
+  pool.query(query, values, (err, result) => {
+    if (err) {
+      console.error('Error executing query:', err);
+      res.status(500).json({ message: 'Failed to add user' });
+    } else {
+      res.status(200).json({ message: 'User added successfully' });
+    }
+  });
+});
+
+Explanation.
+
+---------------------------------------------------------------------------------------------------------------------	
+
+1. `app.post('/users', (req, res) => {`
+   - sets up a route/endpoint handler for the POST request to the '/users' endpoint. 
+     When this endpoint is accessed, this handler function will be executed. 
+     app` is likely an instance of an Express application.
+
+2. `const { name, email, phone } = req.body;`
+    When a client sends an HTTP request with a payload, such as when submitting a form or making an API call, the data is typically included in the request body. 
+    The request body contains the information that the client wants to send to the server.
+   - Destructures the `name`, `email`, and `phone` properties from the request body object (`req.body`). 
+     This assumes that the request body contains these properties.
+
+3. `const query = 'INSERT INTO users (name, email, phone) VALUES ($1, $2, $3)';`
+   - Defines an SQL query string that inserts data into a database table called 'users'. 
+     It uses parameterized queries with placeholders ($1, $2, $3) for the values.
+
+4. `const values = [name, email, phone];`
+   - Creates an array `values` that holds the actual values to be inserted into the database table. These values are extracted from the `name`, `email`, and `phone` variables.
+
+5. `pool.query(query, values, (err, result) => {`
+   - Executes the SQL query using a database connection pool (`pool`). 
+     It passes the query string and the values array as parameters to the `query()` function.
+     The callback function `(err, result) => { ... }` handles the query execution result.
+
+6. `if (err) {`
+   - Checks if an error occurred during the query execution.
+
+7. `console.error('Error executing query:', err);`
+   - Logs the error message to the console, indicating that there was an error executing the query.
+
+8. `res.status(500).json({ message: 'Failed to add user' });`
+   - Sends a response with a status code of 500 (Internal Server Error) and a JSON object containing an error message. 
+    This indicates that there was a failure in adding the user.
+
+9. `} else {`
+   - If there was no error in the query execution, this block will be executed.
+
+10. `res.status(200).json({ message: 'User added successfully' });`
+    - Sends a response with a status code of 200 (OK) and a JSON object containing a success message. 
+      This indicates that the user was added successfully.
+
+11. `});`
+    - Closes the callback function for the `query()` function.
+
+12. `});`
+    - Closes the route handler function for the '/users' endpoint.			  
