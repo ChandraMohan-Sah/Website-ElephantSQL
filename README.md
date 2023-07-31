@@ -16,7 +16,6 @@ Key FEATURES ON THIS PROJECT
 
 6. Search User by name or Email
 
-
 ---------------------------------------------------------------------------------------------------------
 1.Install Package For creating Virtual Environment
 	
